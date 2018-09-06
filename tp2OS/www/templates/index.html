@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, user-sacalable=no,initial-scale=1,maximum-scale=1.0,minimum-scale=1.0 ">
+
+    <!-- Bootstrap CSS -->
+    
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+
+    <!-- Jquery and Popper -->
+    <script src="/static/js/jquery-3.3.1.min.js"></script>
+    <!-- <script type="/static/js/bootstrap.min.js"></script>
+    -->
+
+    <title>Estacion Meteorologica</title>
+
+    <!--Para el fondo de pantalla-->
+    <link rel="stylesheet" type="text/css" href="/static/css/estilos.css">
+
+</head>
+    
+    
+
+ 
+<body>
+
+
+
+    
+
+
+
+
+
+
+<!--Apartir de aca comienzan las 2 tablas primero la de los datos sensados y luego la del promedio de las ultimas 10 muestras-->
+ <h4><strong> Integrantes: Ailigo Oriana 1202/8, Aguilar Sergio 00765/7 </strong> </h4>
+<br>
+
+<div class="container">
+    
+<div class="row">
+   
+      <div class="col-8">
+                <div class="container">
+
+                        <div class="table-responsive">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                </thead>
+                                                <tbody>                            
+                                                    <tr class="p-3 mb-2 bg-primary text-white">
+                                                        <th colspan="2">
+                                                            <span class="strong ">Ultimos datos medidos por la estacion meteorologica: </span> 
+                                                        </th>
+                                                    </tr>
+                                                                                        
+                                                        <tr>
+                                                            <td> Temperatura: </td> <td>{{ l.temperature }} °C</td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>Humedad Relativa: </td> <td>{{ l.humidity }} %</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Presión Atmosférica:</td>
+                                                            <td> {{ l.pressure }} hPa </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Velocidad del viento: </td>
+                                                            <td>   {{ l.windspeed }}  km/h </td>
+                                                        </tr>       
+                                                </tbody>
+                                            </table>
+                        </div>
+                </div>
+
+
+
+      </div>
+
+
+
+      <div class="col-4">
+                <div class="container" align="right">
+
+
+                    <table class="table table-condensed">
+                                            <thead>
+                                            <tr class="p-3 mb-2 bg-primary text-white"> <th colspan="2" class="bg-gris padding-06">Promedio de las ultimas 10 medidas </th>
+                                            </tr>                 
+                                            </thead>
+                                            <tbody>
+                                                <tr><td>Temperatura:</td>                      <td>{{t.temperature}} °C</td></tr>
+                                                <tr><td>Humedad:</td>                          <td>{{t.humidity}} %</td></tr>
+                                                <tr><td>Presion Atmosferica:</td>              <td>{{t.pressure}} hPa</td></tr>
+                                                <tr><td>Velocidad del Viento:</td>             <td>{{t.windspeed}} km/h</td></tr>
+                                            </tbody>
+                    </table>
+
+
+                </div>
+
+      </div>
+
+
+</div>
+
+
+<!--  formulario para enviar el intervalo de muestreo-->
+<div class="row">
+      <div class="col-sm">
+         <form action="/">
+              Intervalo de muestreo: <br>
+
+              Seleccione el tiempo de refresco (1, 2, 5, 10, 30 y 60 segundos)
+              <br>
+              <input type="text" name="Valorderefresco" value="" id="refresco">
+
+
+              <input type="submit" class="btn btn-primary" value="seleccionar">
+        
+         </form> 
+     </div>    
+</div>
+
+
+
+
+</div>
+
+
+
+   
+</body>
+
+
+<script type="text/javascript">
+      //busqueda por expresion regular
+     function getParameterByName(name) 
+     {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+    results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+</script>
+
+<script type="text/javascript"> 
+    
+         
+        var val = 5000;
+         //obtengo el parametro desde la url
+         console.log("val " + getParameterByName('Valorderefresco'));
+         if (  (getParameterByName('Valorderefresco') != '') && ( (getParameterByName('Valorderefresco') == '1' ) || (getParameterByName('Valorderefresco') == '2' ) || (getParameterByName('Valorderefresco') == '5' ) || (getParameterByName('Valorderefresco') == '10' ) || (getParameterByName('Valorderefresco') == '15' ) || (getParameterByName('Valorderefresco') == '30' ) || (getParameterByName('Valorderefresco') == '60' )  ) )
+          val = 1000*getParameterByName('Valorderefresco');//calculo el valor de refresco para la pantalla
+     
+   if(val != null){
+        console.log(val)// utilizado para debug por consola desde el navegador
+        self.setInterval("refresh()",val);//cada 10 seg
+        
+        //Funcion que recarga la pagina
+        function refresh()
+        {
+          location.reload(true);
+        }
+    }
+ </script>
+
+
+</html>
